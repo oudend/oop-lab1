@@ -37,6 +37,11 @@ class Volvo240Test {
         void testInitialSpeed() {
             assertEquals(0, volvo240.getCurrentSpeed());
         }
+
+        @Test
+        void testModelName() {
+            assertEquals("Volvo240", volvo240.getModelName());
+        }
     }
 
     @ParameterizedTest

@@ -37,6 +37,11 @@ class Saab95Test {
         void testInitialSpeed() {
             assertEquals(0, saab95.getCurrentSpeed());
         }
+
+        @Test
+        void testModelName() {
+            assertEquals("Saab95", saab95.getModelName());
+        }
     }
 
     @ParameterizedTest
@@ -49,17 +54,25 @@ class Saab95Test {
 
     @Test
     void testTurbo() {
-        double noTurboFactor = saab95.speedFactor();
+        saab95.gas(1);
+        double noTurbo = saab95.getCurrentSpeed();
+
+        saab95.stopEngine();
         saab95.setTurboOn();
-        double withTurboFactor = saab95.speedFactor();
+        saab95.gas(1);
+        double withTurbo = saab95.getCurrentSpeed();
 
-        assertTrue(noTurboFactor < withTurboFactor);
+        assertTrue(noTurbo < withTurbo);
 
+        saab95.stopEngine();
         saab95.setTurboOff();
-        assertEquals(noTurboFactor, saab95.speedFactor());
+        saab95.gas(1);
+        assertEquals(noTurbo, saab95.getCurrentSpeed());
 
+        saab95.stopEngine();
         saab95.setTurboOn();
-        assertEquals(withTurboFactor, saab95.speedFactor());
+        saab95.gas(1);
+        assertEquals(withTurbo, saab95.getCurrentSpeed());
     }
 
     @Test
