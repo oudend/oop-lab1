@@ -1,22 +1,18 @@
 import java.awt.*;
 
 public abstract class Car implements Movable {
-    public static class Position {
-        public double x, y;
-
-        public Position() {
-            x = 0;
-            y = 0;
-        }
+    public static final class Position {
+        public double x = 0, y = 0;
     }
 
-    int nrDoors;
-    double enginePower;
-    double currentSpeed;
-    Color color;
-    String modelName;
-    Position position;
-    double angle;
+    private final int nrDoors;
+    private final String modelName;
+    private final Position position;
+    private final double enginePower;
+
+    private double currentSpeed;
+    private double angle;
+    private Color color;
 
     public Car(String modelName, Color color, double enginePower, int nrDoors) {
         this.modelName = modelName;
@@ -24,6 +20,7 @@ public abstract class Car implements Movable {
         this.enginePower = enginePower;
         this.nrDoors = nrDoors;
         this.position = new Position();
+        stopEngine();
     }
 
     public void move() {
@@ -92,6 +89,10 @@ public abstract class Car implements Movable {
         color = clr;
     }
 
+    protected void setCurrentSpeed(double speed) {
+        currentSpeed = speed;
+    }
+
     public void startEngine(){
         currentSpeed = 0.1;
     }
@@ -100,6 +101,6 @@ public abstract class Car implements Movable {
         currentSpeed = 0;
     }
 
-    abstract void incrementSpeed(double amount);
-    abstract void decrementSpeed(double amount);
+    protected abstract void incrementSpeed(double amount);
+    protected abstract void decrementSpeed(double amount);
 }

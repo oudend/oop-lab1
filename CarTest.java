@@ -16,12 +16,14 @@ class CarTest {
             super("TestCar", Color.cyan, 10, 0);
         }
 
-        void incrementSpeed(double amount) {
-            currentSpeed += amount;
+        @Override
+        protected void incrementSpeed(double amount) {
+            setCurrentSpeed(getCurrentSpeed() + amount);
         }
 
-        void decrementSpeed(double amount) {
-            currentSpeed -= amount;
+        @Override
+        protected void decrementSpeed(double amount) {
+            setCurrentSpeed(getCurrentSpeed() - amount);
         }
     }
 
