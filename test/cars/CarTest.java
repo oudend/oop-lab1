@@ -15,7 +15,7 @@ class CarTest {
     static final class TestCar extends Car {
 
         public TestCar() {
-            super("TestCar", Color.cyan, 10, 0, Math.PI / 5);
+            super("TestCar", Color.cyan, 10, 0, Math.PI / 5, 40, 40);
         }
 
         @Override

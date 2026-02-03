@@ -1,8 +1,11 @@
 package cars;
+
+import java.awt.geom.Point2D;
+
 /**
  * Interface for movable objects that can move and turn
  */
-public interface Movable {
+public interface Movable extends Positionable {
     /**
      * Moves the object
      */

@@ -10,23 +10,23 @@ public class Volvo240 extends  Car{
      * Affects the car's speed-factor
      * @see #speedFactor()
      */
-    private final static double trimFactor = 1.25;
+    private final static double TRIM_FACTOR = 1.25;
 
     /**
      * Instantiates a new <em>black</em> Volvo240, with <em>four</em> doors and an engine power of 100
      */
     public Volvo240(){
-        super("Volvo240", Color.black, 100, 4, Math.PI / 10);
+        super("Volvo240", Color.black, 100, 4, Math.PI / 10, 40, 40);
     }
 
     /**
      * Calculates the car's speed-factor using its engine-power and trim-factor
      * @see #getEnginePower()
-     * @see #trimFactor
+     * @see #TRIM_FACTOR
      * @return calculated speed-factor
      */
     private double speedFactor(){
-        return getEnginePower() * 0.01 * trimFactor;
+        return getEnginePower() * 0.01 * TRIM_FACTOR;
     }
 
     /**

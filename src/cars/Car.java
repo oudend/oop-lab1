@@ -17,6 +17,11 @@ public abstract class Car implements Movable {
     private final double rotationSpeed;
     private Color color;
 
+    private final double width;
+    private final double depth;
+
+    private Positionable attachee;
+
     /**
      * Creates a Car of model <em>modelName</em>, of color <em>color</em>, with <em>enginePower</em> engine-power, and <em>nrDoors</em> doors
      * @param modelName Name of the car-model
@@ -24,14 +29,35 @@ public abstract class Car implements Movable {
      * @param enginePower Power of the engine
      * @param nrDoors Number of doors on the car
      */
-    public Car(String modelName, Color color, double enginePower, int nrDoors, double rotationSpeed) {
+    public Car(String modelName, Color color, double enginePower, int nrDoors, double rotationSpeed, double width, double depth) {
         this.modelName = modelName;
         this.color = color;
         this.enginePower = enginePower;
         this.nrDoors = nrDoors;
         this.position = new Point2D.Double(0, 0);
         this.rotationSpeed = rotationSpeed;
+        this.width = width;
+        this.depth = depth;
         stopEngine();
+    }
+
+    /**
+     * Attaches the car to a Movable
+     *
+     * @param pickup the pickup
+     * @see Movable
+     * @see CarTransport
+     */
+    void attach(Positionable pickup) {   // package-private
+        position.setLocation(pickup.getPosition());
+        attachee = pickup;
+    }
+
+    /**
+     * Detach the car
+     */
+    void detach() {
+        attachee = null;
     }
 
     /**
@@ -40,6 +66,9 @@ public abstract class Car implements Movable {
      * @see Car#getAngle
      */
     public void move() {
+        if(attachee != null)
+            return;
+
         position.x += currentSpeed * Math.cos(angle);
         position.y += currentSpeed * Math.sin(angle);
     }
@@ -73,6 +102,22 @@ public abstract class Car implements Movable {
     }
 
     /**
+     * Gets the width of the car
+     * @return the width of the car
+     */
+    public double getWidth() {
+        return width;
+    }
+
+    /**
+     * Gets the depth of the car
+     * @return the depth of the car
+     */
+    public double getDepth() {
+        return depth;
+    }
+
+    /**
      * Gets the current angle of the car in radians
      * @return angle in radians
      */
@@ -85,6 +130,8 @@ public abstract class Car implements Movable {
      * @return position of the car
      */
     public Point2D.Double getPosition() {
+        if(attachee != null)
+            position.setLocation(attachee.getPosition());
         return position;
     }
 
