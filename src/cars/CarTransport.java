@@ -5,6 +5,9 @@ import java.util.ArrayList;
 
 public class CarTransport extends Car implements CarStorage<Car> {
 
+    /**
+     * The enum Bed mode.
+     */
     public enum BedMode {
         UP,
         DOWN
@@ -21,6 +24,10 @@ public class CarTransport extends Car implements CarStorage<Car> {
         super("CarTransport", Color.red, 250, 2, Math.PI / 10, 100, 300);
     }
 
+    /**
+     * loads a given car as long as it's close enough and not too wide.
+     * @param car The car to load
+     */
     public void load(Car car) {
         if(car.getWidth() >= getWidth() || bedCarDepth + car.getDepth() >= getDepth())
             throw new RuntimeException("Car does not fit on bed");
@@ -36,6 +43,10 @@ public class CarTransport extends Car implements CarStorage<Car> {
         cars.add(car);
     }
 
+    /**
+     * unloads the first stored car.
+     * @return Car the car that was unloaded
+     */
     public Car unload() {
         if(bedMode == BedMode.UP)
             throw new RuntimeException("Can't unload while the bed is up");
@@ -47,10 +58,18 @@ public class CarTransport extends Car implements CarStorage<Car> {
         return unloadedCar;
     }
 
+    /**
+     * Gets bed mode.
+     *
+     * @return the bed mode
+     */
     public BedMode getBedMode() {
         return bedMode;
     }
 
+    /**
+     * Lower bed.
+     */
     public void lowerBed() {
         if(getCurrentSpeed() != 0)
             throw new RuntimeException("Can't lower the bed while the car is non stationary");
@@ -58,6 +77,9 @@ public class CarTransport extends Car implements CarStorage<Car> {
         bedMode = BedMode.DOWN;
     }
 
+    /**
+     * Raise bed.
+     */
     public void raiseBed() {
         bedMode = BedMode.UP;
     }

@@ -2,6 +2,10 @@ package cars;
 
 import java.awt.*;
 
+
+/**
+ * A class representing a Scania Truck
+ */
 public class Scania extends Car {
     /**
      * Affects the car's maximum bed angle
@@ -22,14 +26,29 @@ public class Scania extends Car {
      */
     private double bedAngle = 0.0f;
 
+    /**
+     * Instantiates a new Scania.
+     */
     public Scania(){
         super("Scania", Color.red, 250, 2, Math.PI / 8, 100, 300);
     }
 
+    /**
+     * Gets bed angle.
+     *
+     * @return the bed angle
+     */
     public double getBedAngle() {
         return bedAngle;
     }
 
+
+    /**
+     * modifies the angle of the bed and clamps it.
+     * @param amount The amount to modify the bed by
+     * @see #raiseBed(double)
+     * @see #lowerBed(double)
+     */
     private void modifyBed(double amount) {
         if(getCurrentSpeed() > 0f)
             return;
@@ -38,10 +57,22 @@ public class Scania extends Car {
         bedAngle = Math.clamp(bedAngle, 0f, MAX_BED_ANGLE);
     }
 
+    /**
+     * Lower bed.
+     *
+     * @param amount the amount
+     * @see #raiseBed(double)
+     */
     public void lowerBed(double amount) {
         modifyBed(-Math.clamp(amount, 0f, 1f));
     }
 
+    /**
+     * Raise bed.
+     *
+     * @param amount the amount
+     * @see #lowerBed(double)
+     */
     public void raiseBed(double amount) {
         modifyBed(Math.clamp(amount, 0f, 1f));
     }
