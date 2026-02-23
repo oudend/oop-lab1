@@ -1,21 +1,31 @@
-package other;
+package carSimulation;
 
-import cars.Car;
-import cars.Saab95;
-import cars.Scania;
-import cars.Volvo240;
+import cars.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 // This panel represents the animated part of the view with the car images.
 
-public class DrawPanel extends JPanel{
+//public abstract class CarPanel extends JComponent {
+//    BufferedImage carImage;
+//    Car car;
+//
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);   // Important!
+//
+//        if (carImage != null && car != null) {
+//            Point2D.Double point = car.getPosition();
+//            g.drawImage(carImage, (int) point.x, (int) point.y, null);
+//        }
+//    }
+//}
 
+public class DrawPanel extends JPanel{
     // Just a single image, TODO: Generalize
     BufferedImage volvoImage;
     BufferedImage saabImage;

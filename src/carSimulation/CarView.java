@@ -1,4 +1,4 @@
-package other;
+package carSimulation;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
