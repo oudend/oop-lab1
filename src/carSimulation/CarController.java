@@ -14,79 +14,46 @@ import java.util.ArrayList;
  */
 
 public class CarController {
-    // member fields:
-
-    // The delay (ms) corresponds to 20 updates a sec (hz)
-    private final int delay = 50;
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
-
-    // The frame that represents this instance View of the MVC pattern
-    CarView frame;
-    // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
+    ArrayList<CarWorkshop<?>> carWorkshops = new ArrayList<>();
 
-    CarWorkshop<Volvo240> volvoWorkshop;
-
-    //methods:
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        cc.cars.add(new Volvo240(0, 0));
-        cc.cars.add(new Saab95(0, 100));
-        cc.cars.add(new Scania(0, 200));
-
-        cc.volvoWorkshop = new CarWorkshop<>(1, 300, 0);
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        // Start the timer
-        cc.timer.start();
+    void addCar(Car car) {
+        cars.add(car);
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getPosition().getX());
-                int y = (int) Math.round(car.getPosition().getY());
+    void addCarWorkshop(CarWorkshop<?> carWorkshop) {
+        carWorkshops.add(carWorkshop);
+    }
 
-                if(x < 0 || x > frame.drawPanel.getWidth() - 100 || y < 0 || y > frame.drawPanel.getHeight() - 60) {
-                    // turn the car 180 degrees
-                    double totalAmount = Math.PI / car.getRotationSpeed();
+    void update(int width, int height) {
+        for (Car car : cars) {
+            car.move();
+            int x = (int) Math.round(car.getPosition().getX());
+            int y = (int) Math.round(car.getPosition().getY());
 
-                    int fullSteps = (int)Math.floor(totalAmount);
-                    double remainder = totalAmount - fullSteps;
+            if(x < 0 || x > width - 100 || y < 0 || y > height - 60) {
+                // turn the car 180 degrees
+                double totalAmount = Math.PI / car.getRotationSpeed();
 
-                    for (int i = 0; i < fullSteps; i++) {
-                        car.turn(1);
-                    }
+                int fullSteps = (int)Math.floor(totalAmount);
+                double remainder = totalAmount - fullSteps;
 
-                    car.turn(remainder);
+                for (int i = 0; i < fullSteps; i++) {
+                    car.turn(1);
                 }
 
-                if(car instanceof Volvo240) {
-                    if(car.getPosition().distance(volvoWorkshop.getPosition()) < 50 && !volvoWorkshop.isLoaded((Volvo240) car)) {
-                        try {
-                        volvoWorkshop.load((Volvo240) car);
-                        } catch(RuntimeException error) {
-                            error.printStackTrace();
-                        }
-                    }
-                }
-
-                frame.drawPanel.moveit(car, x, y);
-
-                // repaint() calls the paintComponent method of the panel
-                frame.drawPanel.repaint();
+                car.turn(remainder);
             }
+
+            //this is very bad but doesn't require changing the model
+//            for (CarWorkshop<?> workshop : carWorkshops) {
+//                try {
+//                    workshop.load(car); // unchecked cast
+//                    break;
+//                } catch (RuntimeException e) {
+//                    // ignore or continue to next workshop
+//                }
+//            }
         }
     }
 

@@ -29,7 +29,7 @@ public abstract class Car implements Movable {
      * @param enginePower Power of the engine
      * @param nrDoors Number of doors on the car
      */
-    public Car(String modelName, Color color, double enginePower, int nrDoors, double rotationSpeed, double width, double depth, int x, int y) {
+    public Car(String modelName, Color color, double enginePower, int nrDoors, double rotationSpeed, double width, double depth, double x, double y) {
         this.modelName = modelName;
         this.color = color;
         this.enginePower = enginePower;

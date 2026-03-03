@@ -9,7 +9,7 @@ public class CarWorkshop<T extends Car> implements Positionable, CarStorage<T> {
 
     private final ArrayList<T> cars = new ArrayList<>();
 
-    public CarWorkshop(int maxCars, int x, int y) {
+    public CarWorkshop(int maxCars, double x, double y) {
         this.maxCars = maxCars;
         this.position = new Point2D.Double(x, y);
     }
