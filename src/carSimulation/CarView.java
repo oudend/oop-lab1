@@ -38,12 +38,20 @@ public class CarView extends JFrame{
     JButton liftBedButton = new JButton("Scania Lift Bed");
     JButton lowerBedButton = new JButton("Lower Lift Bed");
 
+    JButton addCarButton = new JButton("Add car");
+    JButton removeCarButton = new JButton("Remove car");
+
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
 
+    Runnable onAddCar;
+    Runnable onRemoveCar;
+
     // Constructor
-    public CarView(String name, CarController carController){
+    public CarView(String name, CarController carController, Runnable onAddCar, Runnable onRemoveCar){
         this.carController = carController;
+        this.onAddCar = onAddCar;
+        this.onRemoveCar = onRemoveCar;
         initComponents(name);
     }
 
@@ -55,6 +63,10 @@ public class CarView extends JFrame{
 
     public void addDrawable(DrawablePositionable car) {
         drawPanel.addDrawable(car);
+    }
+
+    public void removeLatestDrawable() {
+        drawPanel.removeLatestDrawable();
     }
 
     // Sets everything in place and fits everything
@@ -94,6 +106,8 @@ public class CarView extends JFrame{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCarButton, 6);
+        controlPanel.add(removeCarButton, 7);
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -165,6 +179,20 @@ public class CarView extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carController.stop();
+            }
+        });
+
+        addCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onAddCar.run();
+            }
+        });
+
+        removeCarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onRemoveCar.run();
             }
         });
 

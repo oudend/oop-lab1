@@ -8,14 +8,20 @@ public class CarWorkshop<T extends Car> implements Positionable, CarStorage<T> {
     private final Point2D.Double position;
 
     private final ArrayList<T> cars = new ArrayList<>();
+    private Class<T> type;
 
-    public CarWorkshop(int maxCars, double x, double y) {
+    public CarWorkshop(Class<T> type, int maxCars, double x, double y) {
+        this.type = type;
         this.maxCars = maxCars;
         this.position = new Point2D.Double(x, y);
     }
 
-    public CarWorkshop(int maxCars) {
-        this(maxCars, 0, 0);
+    public Class<T> getType() {
+        return type;
+    }
+
+    public CarWorkshop(Class<T> type, int maxCars) {
+        this(type, maxCars, 0, 0);
     }
 
     public int getMaxCars() {

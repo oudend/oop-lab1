@@ -12,14 +12,14 @@ public class CarWorkshopTest {
 
     @BeforeEach
     void init() {
-        workshop = new CarWorkshop<>(2);
+        workshop = new CarWorkshop<>(Car.class, 2);
     }
 
 
     @ParameterizedTest
     @ValueSource(ints = {1, 3, 5, 10}) // different maxCars values to test
     void testGetMaxCars(int maxCars) {
-        CarWorkshop<Car> carWorkshop = new CarWorkshop<>(maxCars);
+        CarWorkshop<Car> carWorkshop = new CarWorkshop<>(Car.class, maxCars);
         assertEquals(maxCars, carWorkshop.getMaxCars());
     }
 

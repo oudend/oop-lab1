@@ -25,6 +25,10 @@ public class DrawPanel extends JPanel{
         panels.add(drawable);
     }
 
+    void removeLatestDrawable() {
+        panels.removeLast();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

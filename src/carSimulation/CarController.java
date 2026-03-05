@@ -41,19 +41,19 @@ public class CarController {
                 for (int i = 0; i < fullSteps; i++) {
                     car.turn(1);
                 }
-
                 car.turn(remainder);
             }
 
-            //this is very bad but doesn't require changing the model
-//            for (CarWorkshop<?> workshop : carWorkshops) {
-//                try {
-//                    workshop.load(car); // unchecked cast
-//                    break;
-//                } catch (RuntimeException e) {
-//                    // ignore or continue to next workshop
-//                }
-//            }
+            for (CarWorkshop<?> workshop : carWorkshops) {
+                tryLoadCar(workshop, car);
+            }
+        }
+    }
+
+    private <T extends Car> void tryLoadCar(CarWorkshop<T> workshop, Car car) {
+        if (workshop.getType().isInstance(car)) {
+            if(car.getPosition().distance(workshop.getPosition()) < 50 && !workshop.isLoaded(workshop.getType().cast(car)))
+                workshop.load(workshop.getType().cast(car));
         }
     }
 
@@ -110,5 +110,9 @@ public class CarController {
         for (Car car : cars) {
             car.brake(brake);
         }
+    }
+
+    public void removeLatestCar() {
+        cars.removeLast();
     }
 }
